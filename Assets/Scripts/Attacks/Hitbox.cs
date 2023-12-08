@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
-    [field: SerializeField]
-    public int Damage { get; set; }
+    [SerializeField] public AttackBase attackBase;
 
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
-            other.SendMessage("TakeDamage", Damage, SendMessageOptions.DontRequireReceiver);
+            other.GetComponent<EnemyController>().TakeDamage(attackBase.Damage);
         }
     }
     

@@ -843,7 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   maxHp: 10
-  xp: 5
+  xp: 0
   maxXp: 10
   attacks:
   - {fileID: 1944614834}
@@ -1438,9 +1438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd39db8ca87e60e4389f210f5f53a609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLevel: 10
   baseDamage: 1
-  level: 1
   baseCooldown: 1
+  attackDuration: 0.1
 --- !u!1 &1952105040
 GameObject:
   m_ObjectHideFlags: 0

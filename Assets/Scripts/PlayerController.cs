@@ -67,8 +67,9 @@ public class PlayerController : MonoBehaviour
         
         // selects random attack to level up
         GameObject item = attacks[random.Next(attacks.Count)];
-        item.SendMessage("LevelUp");
+        item.GetComponent<AttackBase>().Level += 1;
     }
+    
     
     // --- public methods
     public void TakeDamage(int damage, GameObject toBeKnocked = null)
