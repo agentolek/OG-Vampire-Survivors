@@ -1439,8 +1439,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 10
-  baseDamage: 1
   baseCooldown: 1
+  baseDamage: 1
   attackDuration: 0.1
 --- !u!1 &1952105040
 GameObject:
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0674b1c3abec54496946779f5fb40a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Damage>k__BackingField: 0
+  attackBase: {fileID: 1944614836}
 --- !u!1001 &6553517831898382782
 PrefabInstance:
   m_ObjectHideFlags: 0
