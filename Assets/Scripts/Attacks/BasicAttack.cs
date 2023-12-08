@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttack : MonoBehaviour
+public class BasicAttack : AttackBase
 {
     // --- public variables
     
-    [SerializeField] public int baseDamage = 1;
-    [SerializeField] private int level = 1;
     [SerializeField] public float baseCooldown = 1;
+    [SerializeField] public int baseDamage = 1;
+    [SerializeField] private float attackDuration = 0.1f;
 
     private GameObject _hitbox;
 
@@ -19,14 +19,22 @@ public class BasicAttack : MonoBehaviour
     
     void Start()
     {
+        // adds function which updates attack values to delegate which triggers on level change
+        onLevelUp += _SetValues;
+        
+        // set up starting values for variables
         _lastUsedTime = Time.time;
         _hitbox = transform.Find("Hitbox").gameObject;
         _hitbox.SetActive(false);
-        _hitbox.GetComponent<Hitbox>().Damage = baseDamage;
+        
+        Damage = baseDamage;
+        Cooldown = baseCooldown;
+        
     }
 
     private void Update()
     {
+        // activates attack at intervals equal to Cooldown   
         if (Time.time >= _lastUsedTime + baseCooldown)
         {
             _lastUsedTime = Time.time;
@@ -37,23 +45,16 @@ public class BasicAttack : MonoBehaviour
     // --- private methods
     private IEnumerator Attack()
     {
+        // enables hitbox for an established duration
         _hitbox.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(attackDuration);
         _hitbox.SetActive(false);
     }
-    
-    
-    // --- public methods
-    public void LevelUp()
-    {
-        // scaling for attack goes here
-        level += 1;
-        if (level % 2 == 0)
-        {
-            _hitbox.GetComponent<Hitbox>().Damage += 1;
-        }
-        Debug.Log(level);
 
-        baseCooldown *= 0.98f;
+    private void _SetValues()
+    {
+        // function responsible for updating values when level changes
+        Damage = baseDamage * ((Level / 2) + 1);
+        Cooldown = baseCooldown * Math.Pow(0.98f, Level-1);
     }
 }
