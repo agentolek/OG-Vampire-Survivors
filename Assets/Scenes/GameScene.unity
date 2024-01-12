@@ -592,9 +592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb124803fd678d4e9e4268410042f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnNumber: 10
+  spawnNumber: 30
   spawnCooldown: 10
-  spawnDistance: 10
+  spawnDistance: 30
   basicEnemy: {fileID: 6722779513500544884, guid: 543fc5aaae20d574faaaec23ea31313d, type: 3}
 --- !u!1 &935345574
 GameObject:
