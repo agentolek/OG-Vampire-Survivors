@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _sprite = gameObject.GetComponent<SpriteRenderer>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManagement>();
         _uiManager.UpdateXp(xp, maxXp);
+        SetupAttacks();
     }
     
     IEnumerator ChangeColor(Color color)
@@ -64,9 +65,33 @@ public class PlayerController : MonoBehaviour
         xp -= maxXp;
         maxXp = Mathf.RoundToInt(1.2f * maxXp);
         
-        // selects random attack to level up
-        GameObject item = attacks[random.Next(attacks.Count)];
-        item.GetComponent<AttackBase>().Level += 1;
+        // selects random attack to level up or activate
+        // TODO: this will enter infinite loop if all attacks are at their max level.
+        GameObject attack = attacks[random.Next(attacks.Count)];
+        while (attack.GetComponent<AttackBase>().Level >= attack.GetComponent<AttackBase>().maxLevel)
+        {
+            attack = attacks[random.Next(attacks.Count)];
+        }
+
+        if (!attack.activeSelf)
+        {
+            attack.SetActive(true);
+        }
+        else
+        {
+            attack.GetComponent<AttackBase>().Level += 1;
+        }
+    }
+
+
+    private void SetupAttacks()
+    {
+        foreach (var attack in attacks)
+        {
+            attack.SetActive(false);
+        }
+        attacks[0].SetActive(true);
+        
     }
     
     
