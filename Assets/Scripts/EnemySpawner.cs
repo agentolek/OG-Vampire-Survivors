@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     // --- public variables
-    [SerializeField] public float spawnNumber = 10;
+    [SerializeField] public float spawnNumber = 20;
     [SerializeField] public float spawnCooldown = 10;
-    [SerializeField] public float spawnDistance = 10;
+    [SerializeField] public float spawnDistance = 30;
 
     [SerializeField] public GameObject basicEnemy;
     
@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     {
         _startTime = Time.time;
         _playerTransform = GameObject.Find("Player1").GetComponent<Transform>();
+        SpawnEnemies();
     }
 
     void Update()
@@ -42,6 +43,6 @@ public class EnemySpawner : MonoBehaviour
             Instantiate(basicEnemy, pos + playerPos, Quaternion.identity);
         }
 
-        spawnNumber += 2;
+        spawnNumber = Mathf.Floor(spawnNumber*1.1f);
     }
 }
