@@ -11,26 +11,16 @@ public class UIManagement : MonoBehaviour
     public Image healthBar;
     [SerializeField]
     public Image xpBar;
-
-    [SerializeField] public TMP_Text timerText;
+    [SerializeField]
+    public Timer timer;
     
     private float _xHpSize;
     private float _xXpSize;
-    public float TotalTime { get; set; }
-
 
     private void Start()
     {
         _xHpSize = healthBar.rectTransform.sizeDelta.x;
         _xXpSize = xpBar.rectTransform.sizeDelta.x;
-    }
-
-    private void Update()
-    {
-        TotalTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(TotalTime/60);
-        int seconds = Mathf.FloorToInt(TotalTime % 60);
-        timerText.text = $"{minutes}:{(seconds < 10 ? "0" + seconds : seconds)}";
     }
 
     
@@ -42,6 +32,11 @@ public class UIManagement : MonoBehaviour
     public void UpdateXp(float newXp, float newMaxXp)
     {
         xpBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newXp/newMaxXp * _xXpSize);
+    }
+
+    public float GetTimerValue()
+    {
+        return timer.TotalTime;
     }
 
 }
