@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
@@ -95,6 +96,13 @@ public class PlayerController : MonoBehaviour
     }
     
     
+    private void Die()
+    {
+        gameObject.SetActive(false);
+        SceneManagement.Instance.ShowMenu();
+    }
+    
+    
     // --- public methods
     public void TakeDamage(int damage, GameObject toBeKnocked = null)
     {
@@ -115,10 +123,4 @@ public class PlayerController : MonoBehaviour
         
         _uiManager.UpdateXp(xp, maxXp);
     }
-
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
-    
 }
