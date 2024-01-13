@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
@@ -18,20 +17,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] List<GameObject> attacks;
     public int PlayerLevel { get; set; }
     
-    // [SerializeField] public float kbForce = 0.5f;
-    // [SerializeField] public float kbTime = 0.2f;
-    
     
     // --- private variables
     
     private SpriteRenderer _sprite;
     private UIManagement _uiManager;
+    private GameManagement _gameManager;
     
     // --- private methods
     void Start()
     {
         _sprite = gameObject.GetComponent<SpriteRenderer>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManagement>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManagement>();
         _uiManager.UpdateXp(xp, maxXp);
         SetupAttacks();
     }
@@ -99,7 +97,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         gameObject.SetActive(false);
-        SceneManagement.Instance.ShowMenu();
+        _gameManager.LoseGame();
     }
     
     

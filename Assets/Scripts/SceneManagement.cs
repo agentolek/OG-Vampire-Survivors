@@ -20,10 +20,6 @@ public class SceneManagement : MonoBehaviour
         }
     }
     #endregion
-    // private void Start()
-    // {
-    //     DontDestroyOnLoad(gameObject);
-    // }
 
     public void PlayGame()
     {
