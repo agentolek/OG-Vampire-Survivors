@@ -10,14 +10,16 @@ public class EnemyController : MonoBehaviour
     
     // --- public variables
     [SerializeField] public int damage = 1;
-    [SerializeField] public int hp = 3;
     [SerializeField] public int maxHp = 3;
     [SerializeField] public GameObject xpOrb;
     
-    
+    // --- private variables
+    private int _hp = 3;
+
     // --- private methods
     void Start()
     {
+        _hp = maxHp;
         _player = GameObject.Find("Player1").GetComponent<PlayerController>();
     }
     
@@ -33,8 +35,8 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-        hp = hp - value;
-        if (hp <= 0)
+        _hp = _hp - value;
+        if (_hp <= 0)
         {
             Die();
         }
