@@ -25,7 +25,7 @@ public class SceneManagement : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
-    
+
     public void ShowMenu()
     {
         SceneManager.LoadScene("MenuScene");

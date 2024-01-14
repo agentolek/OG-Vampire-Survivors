@@ -7,12 +7,12 @@ public class EnemyController : MonoBehaviour
 {
     // --- private variables
     private PlayerController _player;
-    
+
     // --- public variables
     [SerializeField] public int damage = 1;
     [SerializeField] public int maxHp = 3;
     [SerializeField] public GameObject xpOrb;
-    
+
     // --- private variables
     private int _hp = 3;
 
@@ -22,7 +22,17 @@ public class EnemyController : MonoBehaviour
         _hp = maxHp;
         _player = GameObject.Find("Player1").GetComponent<PlayerController>();
     }
-    
+
+    private void OnEnable()
+    {
+        GameManagement.onVictory += _Disappear;
+    }
+
+    private void OnDisable()
+    {
+        GameManagement.onVictory -= _Disappear;
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.CompareTag("Player"))
@@ -30,7 +40,7 @@ public class EnemyController : MonoBehaviour
             _player.TakeDamage(damage, gameObject);
         }
     }
-    
+
     // --- public methods
 
     public void TakeDamage(int value)
@@ -45,6 +55,11 @@ public class EnemyController : MonoBehaviour
     private void Die()
     {
         Instantiate(xpOrb, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
+
+    private void _Disappear()
+    {
         Destroy(gameObject);
     }
 }

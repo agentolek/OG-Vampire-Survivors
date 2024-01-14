@@ -1,23 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagement : MonoBehaviour
 {
     [SerializeField] public int gameLength = 120;
 
+    public delegate void OnVictory();
+    public static event OnVictory onVictory;
+
+    public delegate void OnDefeat();
+    public static event OnDefeat onDefeat;
+
+    private void OnEnable()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+
+    }
+
     public void WinGame()
     {
-        // TODO: add win screen
-        Debug.Log("you won");
-        SceneManagement.Instance.ShowMenu();
+        onVictory?.Invoke();
     }
 
     public void LoseGame()
     {
-        // TODO: add lose screen
-        Debug.Log("you lost");
-        SceneManagement.Instance.ShowMenu();
+        onDefeat?.Invoke();
     }
 }
