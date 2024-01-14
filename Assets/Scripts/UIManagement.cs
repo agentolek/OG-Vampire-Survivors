@@ -12,8 +12,9 @@ public class UIManagement : MonoBehaviour
     [SerializeField] public Image xpBar;
     [SerializeField] public Timer timer;
     [SerializeField] public GameObject inGameUI;
-    [SerializeField] public GameObject victoryUI;
+    [SerializeField] public GameObject gameFinishedUI;
     [SerializeField] public TMP_Text levelInfoText;
+    [SerializeField] public TMP_Text titleText;
     [SerializeField] public GameObject player;
     private float _xHpSize;
     private float _xXpSize;
@@ -26,17 +27,18 @@ public class UIManagement : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManagement.onVictory += _HideInGameIU;
-        GameManagement.onVictory += _ShowVictoryUI;
-        GameManagement.onVictory += _SetLevelInfoText;
+        GameManagement.onGameFinished += _HideInGameIU;
+        GameManagement.onGameFinished += _ShowGameFinishedUI;
+        GameManagement.onGameFinished += _SetLevelInfoText;
+        GameManagement.onGameFinished += _SetTitleText;
     }
 
     private void OnDisable()
     {
-        GameManagement.onVictory -= _HideInGameIU;
-        GameManagement.onVictory -= _ShowVictoryUI;
-        GameManagement.onVictory -= _SetLevelInfoText;
-
+        GameManagement.onGameFinished -= _HideInGameIU;
+        GameManagement.onGameFinished -= _ShowGameFinishedUI;
+        GameManagement.onGameFinished -= _SetLevelInfoText;
+        GameManagement.onGameFinished -= _SetTitleText;
     }
 
     private void _HideInGameIU()
@@ -44,9 +46,9 @@ public class UIManagement : MonoBehaviour
         inGameUI.SetActive(false);
     }
 
-    private void _ShowVictoryUI()
+    private void _ShowGameFinishedUI()
     {
-        victoryUI.SetActive(true);
+        gameFinishedUI.SetActive(true);
     }
 
     public void UpdateHp(float newHp, float newMaxHp)
@@ -68,6 +70,19 @@ public class UIManagement : MonoBehaviour
     {
         int playerLevel = player.GetComponent<PlayerController>().PlayerLevel;
         levelInfoText.text = "Achieved level: " + playerLevel;
+    }
+
+    private void _SetTitleText()
+    {
+        bool gameWon = GameManagement.gameWon;
+        if (gameWon)
+        {
+            titleText.text = "Victory Royale!";
+        }
+        else
+        {
+            titleText.text = "Catastrophic failure!";
+        }
     }
 }
 

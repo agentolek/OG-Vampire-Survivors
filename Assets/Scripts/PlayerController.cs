@@ -13,18 +13,18 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public int xp = 0;
     [SerializeField] public int maxXp = 10;
-    
+
     [SerializeField] public List<GameObject> attacks;
     public int PlayerLevel { get; set; }
-    
-    
+
+
     // --- private variables
-    
+
     private SpriteRenderer _sprite;
     private UIManagement _uiManager;
     private GameManagement _gameManager;
     private UpgradeManagement _upgradeController;
-    
+
     // --- private methods
     void Start()
     {
@@ -35,19 +35,19 @@ public class PlayerController : MonoBehaviour
         _uiManager.UpdateXp(xp, maxXp);
         SetupAttacks();
     }
-    
+
     IEnumerator ChangeColor(Color color)
     {
-        
+
         _sprite.color = color;
         yield return new WaitForSeconds(0.2f);
         _sprite.color = Color.white;
 
     }
-    
+
     private void ChangeHp(int value)
     {
-        hp = hp+value;
+        hp = hp + value;
         _uiManager.UpdateHp(hp, maxHp);
         if (hp <= 0)
         {
@@ -58,12 +58,12 @@ public class PlayerController : MonoBehaviour
     private void LevelUp()
     {
         Random random = new Random();
-        
+
         // changes player stats
         PlayerLevel += 1;
         xp -= maxXp;
         maxXp = Mathf.RoundToInt(maxXp * 1.2f);
-        
+
         _upgradeController.TriggerUpgrade();
         SetupAttacks();
     }
@@ -77,20 +77,20 @@ public class PlayerController : MonoBehaviour
             attack.SetActive(attack.GetComponent<AttackBase>().Level != 0);
         }
     }
-    
-    
+
+
     private void Die()
     {
         gameObject.SetActive(false);
-        _gameManager.LoseGame();
+        GameManagement.gameWon = false;
+        _gameManager.FinishGame();
     }
-    
-    
+
     // --- public methods
     public void TakeDamage(int damage, GameObject toBeKnocked = null)
     {
-        ChangeHp(-1*damage);
-        
+        ChangeHp(-1 * damage);
+
         StartCoroutine(ChangeColor(Color.red));
     }
 
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             LevelUp();
             AddXp(0);
         }
-        
+
         _uiManager.UpdateXp(xp, maxXp);
     }
 

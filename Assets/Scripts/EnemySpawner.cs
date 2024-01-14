@@ -32,12 +32,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManagement.onVictory += _DisableEnemySpawner;
+        GameManagement.onGameFinished += _DisableEnemySpawner;
     }
 
     private void OnDisable()
     {
-        GameManagement.onVictory -= _DisableEnemySpawner;
+        GameManagement.onGameFinished -= _DisableEnemySpawner;
     }
 
     void Update()

@@ -22,13 +22,14 @@ public class Timer : MonoBehaviour
     private void Update()
     {
         TotalTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(TotalTime/60);
+        int minutes = Mathf.FloorToInt(TotalTime / 60);
         int seconds = Mathf.FloorToInt(TotalTime % 60);
         timerText.text = $"{minutes}:{(seconds < 10 ? "0" + seconds : seconds)}";
 
         if (_timeToWin <= TotalTime)
         {
-            _gameManagement.WinGame();
+            GameManagement.gameWon = true;
+            _gameManagement.FinishGame();
         }
     }
 }

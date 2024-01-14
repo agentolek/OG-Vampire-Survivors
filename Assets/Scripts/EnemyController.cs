@@ -25,12 +25,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManagement.onVictory += _Disappear;
+        GameManagement.onGameFinished += _Disappear;
     }
 
     private void OnDisable()
     {
-        GameManagement.onVictory -= _Disappear;
+        GameManagement.onGameFinished -= _Disappear;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
