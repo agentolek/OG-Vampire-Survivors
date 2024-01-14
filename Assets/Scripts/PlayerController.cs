@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int maxXp = 10;
 
     [SerializeField] public List<GameObject> attacks;
-    public int PlayerLevel { get; set; }
 
+    public int PlayerLevel { get; set; } = 1;
 
     // --- private variables
 

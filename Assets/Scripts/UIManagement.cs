@@ -27,7 +27,7 @@ public class UIManagement : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManagement.onGameFinished += _HideInGameIU;
+        GameManagement.onGameFinished += _HideInGameUI;
         GameManagement.onGameFinished += _ShowGameFinishedUI;
         GameManagement.onGameFinished += _SetLevelInfoText;
         GameManagement.onGameFinished += _SetTitleText;
@@ -35,13 +35,14 @@ public class UIManagement : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManagement.onGameFinished -= _HideInGameIU;
+        GameManagement.onGameFinished -= _HideInGameUI;
         GameManagement.onGameFinished -= _ShowGameFinishedUI;
         GameManagement.onGameFinished -= _SetLevelInfoText;
         GameManagement.onGameFinished -= _SetTitleText;
+
     }
 
-    private void _HideInGameIU()
+    private void _HideInGameUI()
     {
         inGameUI.SetActive(false);
     }
