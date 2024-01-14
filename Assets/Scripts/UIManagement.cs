@@ -26,20 +26,20 @@ public class UIManagement : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManagement.onVictory += _HideInGameIU;
+        GameManagement.onVictory += _HideInGameUI;
         GameManagement.onVictory += _ShowVictoryUI;
         GameManagement.onVictory += _SetLevelInfoText;
     }
 
     private void OnDisable()
     {
-        GameManagement.onVictory -= _HideInGameIU;
+        GameManagement.onVictory -= _HideInGameUI;
         GameManagement.onVictory -= _ShowVictoryUI;
         GameManagement.onVictory -= _SetLevelInfoText;
 
     }
 
-    private void _HideInGameIU()
+    private void _HideInGameUI()
     {
         inGameUI.SetActive(false);
     }
