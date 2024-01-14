@@ -853,10 +853,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 10034076}
   xpBar: {fileID: 1492448547}
-  timer: {fileID: 0}
   inGameUI: {fileID: 1412132027}
-  victoryUI: {fileID: 1201086037}
+  gameFinishedUI: {fileID: 1201086037}
   levelInfoText: {fileID: 1284454303}
+  titleText: {fileID: 561337020}
   player: {fileID: 988391739}
 --- !u!1 &341349531
 GameObject:
@@ -2457,6 +2457,7 @@ RectTransform:
   m_Children:
   - {fileID: 1412132028}
   - {fileID: 1201086038}
+  - {fileID: 902625964}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6435,7 +6436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71de12e373f8f9347b325cea641b5694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameLength: 3
+  gameLength: 30
 --- !u!1 &1981843111
 GameObject:
   m_ObjectHideFlags: 0
@@ -6987,6 +6988,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1761225775}
+  - {fileID: 606614922}
   - {fileID: 1980062856}
   - {fileID: 846331126}
   - {fileID: 324842109}
@@ -6997,4 +6999,3 @@ SceneRoots:
   - {fileID: 1657911364}
   - {fileID: 935345578}
   - {fileID: 1952105043}
-  - {fileID: 606614922}

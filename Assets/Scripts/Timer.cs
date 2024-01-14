@@ -28,7 +28,7 @@ public class Timer : MonoBehaviour
 
         if (_timeToWin <= TotalTime)
         {
-            GameManagement.gameWon = true;
+            GameManagement.GameWon = true;
             _gameManagement.FinishGame();
         }
     }

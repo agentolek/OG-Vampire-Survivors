@@ -10,7 +10,7 @@ public class UIManagement : MonoBehaviour
 {
     [SerializeField] public Image healthBar;
     [SerializeField] public Image xpBar;
-    [SerializeField] public Timer timer;
+    // [SerializeField] public Timer timer;
     [SerializeField] public GameObject inGameUI;
     [SerializeField] public GameObject gameFinishedUI;
     [SerializeField] public TMP_Text levelInfoText;
@@ -61,28 +61,19 @@ public class UIManagement : MonoBehaviour
         xpBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newXp / newMaxXp * _xXpSize);
     }
 
-    public float GetTimerValue()
-    {
-        return timer.TotalTime;
-    }
+    // public float GetTimerValue()
+    // {
+    //     return timer.TotalTime;
+    // }
 
     private void _SetLevelInfoText()
     {
-        int playerLevel = player.GetComponent<PlayerController>().PlayerLevel;
-        levelInfoText.text = "Achieved level: " + playerLevel;
+        levelInfoText.text = "Achieved level: " + player.GetComponent<PlayerController>().PlayerLevel;
     }
 
     private void _SetTitleText()
     {
-        bool gameWon = GameManagement.gameWon;
-        if (gameWon)
-        {
-            titleText.text = "Victory Royale!";
-        }
-        else
-        {
-            titleText.text = "Catastrophic failure!";
-        }
+        titleText.text = GameManagement.GameWon ? "Victory Royale!" : "Catastrophic failure!";
     }
 }
 

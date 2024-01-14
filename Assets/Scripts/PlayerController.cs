@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -57,8 +56,6 @@ public class PlayerController : MonoBehaviour
 
     private void LevelUp()
     {
-        Random random = new Random();
-
         // changes player stats
         PlayerLevel += 1;
         xp -= maxXp;
@@ -82,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         gameObject.SetActive(false);
-        GameManagement.gameWon = false;
+        GameManagement.GameWon = false;
         _gameManager.FinishGame();
     }
 
