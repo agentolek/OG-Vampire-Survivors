@@ -13,14 +13,14 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] public GameObject basicEnemy;
     [SerializeField] public GameObject advancedEnemy;
-    
+
     // --- private variables
     private float _lastUsedTime;
     private Transform _playerTransform;
     private Timer _timer;
     private GameObject _currentEnemy;
-    
-    
+
+
     // --- private methods
     void Start()
     {
@@ -28,6 +28,16 @@ public class EnemySpawner : MonoBehaviour
         _timer = GameObject.Find("TimerText").GetComponent<Timer>();
         _currentEnemy = basicEnemy;
         SpawnEnemies();
+    }
+
+    private void OnEnable()
+    {
+        GameManagement.onVictory += _DisableEnemySpawner;
+    }
+
+    private void OnDisable()
+    {
+        GameManagement.onVictory -= _DisableEnemySpawner;
     }
 
     void Update()
@@ -47,11 +57,16 @@ public class EnemySpawner : MonoBehaviour
     {
         for (var i = 0; i < spawnNumber; i++)
         {
-            var pos = (new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized) * Random.Range(spawnDistance-5, spawnDistance+5);
+            var pos = (new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized) * Random.Range(spawnDistance - 5, spawnDistance + 5);
             Vector2 playerPos = _playerTransform.position;
             Instantiate(_currentEnemy, pos + playerPos, Quaternion.identity);
         }
 
-        spawnNumber = Mathf.Floor(spawnNumber*1.1f);
+        spawnNumber = Mathf.Floor(spawnNumber * 1.1f);
+    }
+
+    private void _DisableEnemySpawner()
+    {
+        this.enabled = false;
     }
 }

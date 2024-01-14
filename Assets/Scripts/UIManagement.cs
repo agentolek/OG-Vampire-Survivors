@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManagement : MonoBehaviour
 {
-    [SerializeField]
-    public Image healthBar;
-    [SerializeField]
-    public Image xpBar;
-    [SerializeField]
-    public Timer timer;
-    
+    [SerializeField] public Image healthBar;
+    [SerializeField] public Image xpBar;
+    [SerializeField] public Timer timer;
+    [SerializeField] public GameObject inGameUI;
+    [SerializeField] public GameObject victoryUI;
+    [SerializeField] public TMP_Text levelInfoText;
+    [SerializeField] public GameObject player;
     private float _xHpSize;
     private float _xXpSize;
 
@@ -23,15 +24,39 @@ public class UIManagement : MonoBehaviour
         _xXpSize = xpBar.rectTransform.sizeDelta.x;
     }
 
-    
+    private void OnEnable()
+    {
+        GameManagement.onVictory += _HideInGameIU;
+        GameManagement.onVictory += _ShowVictoryUI;
+        GameManagement.onVictory += _SetLevelInfoText;
+    }
+
+    private void OnDisable()
+    {
+        GameManagement.onVictory -= _HideInGameIU;
+        GameManagement.onVictory -= _ShowVictoryUI;
+        GameManagement.onVictory -= _SetLevelInfoText;
+
+    }
+
+    private void _HideInGameIU()
+    {
+        inGameUI.SetActive(false);
+    }
+
+    private void _ShowVictoryUI()
+    {
+        victoryUI.SetActive(true);
+    }
+
     public void UpdateHp(float newHp, float newMaxHp)
     {
-        healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newHp/newMaxHp * _xHpSize);
+        healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newHp / newMaxHp * _xHpSize);
     }
 
     public void UpdateXp(float newXp, float newMaxXp)
     {
-        xpBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newXp/newMaxXp * _xXpSize);
+        xpBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newXp / newMaxXp * _xXpSize);
     }
 
     public float GetTimerValue()
@@ -39,5 +64,10 @@ public class UIManagement : MonoBehaviour
         return timer.TotalTime;
     }
 
+    private void _SetLevelInfoText()
+    {
+        int playerLevel = player.GetComponent<PlayerController>().PlayerLevel;
+        levelInfoText.text = "Achieved level: " + playerLevel;
+    }
 }
 
