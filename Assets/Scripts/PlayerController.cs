@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int xp = 0;
     [SerializeField] public int maxXp = 10;
     
-    [SerializeField] List<GameObject> attacks;
+    [SerializeField] public List<GameObject> attacks;
     public int PlayerLevel { get; set; }
     
     
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _sprite;
     private UIManagement _uiManager;
     private GameManagement _gameManager;
+    private UpgradeManagement _upgradeController;
     
     // --- private methods
     void Start()
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         _sprite = gameObject.GetComponent<SpriteRenderer>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManagement>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManagement>();
+        _upgradeController = GameObject.Find("UpgradeManager").GetComponent<UpgradeManagement>();
         _uiManager.UpdateXp(xp, maxXp);
         SetupAttacks();
     }
@@ -59,8 +61,7 @@ public class PlayerController : MonoBehaviour
         
         // changes player stats
         PlayerLevel += 1;
-        maxHp += 2;
-        ChangeHp(2);
+        ChangeMaxHp(2);
         xp -= maxXp;
         maxXp = Mathf.RoundToInt(1.2f * maxXp);
         
@@ -85,12 +86,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetupAttacks()
     {
+        // if attack's level is 0, hide it, otherwise show it
         foreach (var attack in attacks)
         {
-            attack.SetActive(false);
+            attack.SetActive(attack.GetComponent<AttackBase>().Level != 0);
         }
-        attacks[0].SetActive(true);
-        
     }
     
     
@@ -120,5 +120,11 @@ public class PlayerController : MonoBehaviour
         }
         
         _uiManager.UpdateXp(xp, maxXp);
+    }
+
+    public void ChangeMaxHp(int value)
+    {
+        maxHp += value;
+        ChangeHp(value);
     }
 }

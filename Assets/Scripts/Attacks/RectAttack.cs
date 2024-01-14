@@ -10,7 +10,7 @@ public class RectAttack : AttackBase
     [SerializeField] public float baseCooldown = 1;
     [SerializeField] public int baseDamage = 1;
     [SerializeField] private float attackDuration = 0.1f;
-
+    
     private GameObject _hitbox;
 
     
@@ -29,7 +29,6 @@ public class RectAttack : AttackBase
         
         Damage = baseDamage;
         Cooldown = baseCooldown;
-        
     }
 
     private void Update()
