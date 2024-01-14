@@ -7,11 +7,12 @@ using UnityEngine;
 public class AttackBase : MonoBehaviour
 {
     [SerializeField] public int maxLevel = 10;
+    [SerializeField] public bool unlockedAtStart = false;
     
     public int Damage { get; set; }
     public double Cooldown { get; set; }
     
-    private int _level = 1;
+    private int _level;
     public int Level
     {
         get => _level;
@@ -36,5 +37,9 @@ public class AttackBase : MonoBehaviour
         }
         return false;
     }
-    
+
+    private void Awake()
+    {
+        Level = unlockedAtStart ? 1 : 0;
+    }
 }
