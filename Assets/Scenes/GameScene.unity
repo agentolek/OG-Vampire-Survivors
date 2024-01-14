@@ -853,10 +853,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 10034076}
   xpBar: {fileID: 1492448547}
-  timer: {fileID: 0}
   inGameUI: {fileID: 1412132027}
-  victoryUI: {fileID: 1201086037}
+  gameFinishedUI: {fileID: 1201086037}
   levelInfoText: {fileID: 1284454303}
+  titleText: {fileID: 561337020}
   player: {fileID: 988391739}
 --- !u!1 &341349531
 GameObject:
@@ -2458,6 +2458,7 @@ RectTransform:
   - {fileID: 1412132028}
   - {fileID: 902625964}
   - {fileID: 1201086038}
+  - {fileID: 902625964}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7069,6 +7070,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1761225775}
+  - {fileID: 606614922}
   - {fileID: 1980062856}
   - {fileID: 846331126}
   - {fileID: 324842109}

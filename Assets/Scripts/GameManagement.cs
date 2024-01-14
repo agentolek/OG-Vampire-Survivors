@@ -8,30 +8,14 @@ using UnityEngine.SceneManagement;
 public class GameManagement : MonoBehaviour
 {
     [SerializeField] public int gameLength = 120;
+    public static bool GameWon = false;
 
-    public delegate void OnVictory();
-    public static event OnVictory onVictory;
+    public delegate void OnGameFinished();
+    public static event OnGameFinished onGameFinished;
 
-    public delegate void OnDefeat();
-    public static event OnDefeat onDefeat;
-
-    private void OnEnable()
+    public void FinishGame()
     {
+        onGameFinished?.Invoke();
 
-    }
-
-    private void OnDisable()
-    {
-
-    }
-
-    public void WinGame()
-    {
-        onVictory?.Invoke();
-    }
-
-    public void LoseGame()
-    {
-        onDefeat?.Invoke();
     }
 }
