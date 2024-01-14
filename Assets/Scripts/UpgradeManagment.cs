@@ -45,7 +45,9 @@ public class UpgradeManagement : MonoBehaviour
             if (attack.GetComponent<AttackBase>().Level < attack.GetComponent<AttackBase>().maxLevel)
             {
                 currButton.onClick.AddListener(delegate { UpgradeAttack(attack); });
-                // ChangeButtonText("level attack", button);
+                ChangeButtonText(
+                    attack.GetComponent<AttackBase>().Level == 0 ? $"unlock {attack.name}" : $"upgrade {attack.name}",
+                    button);
             }
             else
             {
@@ -53,7 +55,7 @@ public class UpgradeManagement : MonoBehaviour
                 {
                     int value = random.Next(1, _playerController.PlayerLevel);
                     IncreaseMaxHp(value);
-                    // ChangeButtonText($"maxHP += {value}", button);
+                    ChangeButtonText($"maxHP += {value}", button);
                 });
             }
         }
@@ -61,7 +63,7 @@ public class UpgradeManagement : MonoBehaviour
     
     private void ChangeButtonText(string newText, GameObject button)
     {
-        button.GetComponentInChildren<TextMeshPro>().text = newText;
+        button.GetComponentInChildren<TextMeshProUGUI>(includeInactive: true).text = newText;
     }
     
     // helper functions, used to pass parameters to methods called by OnClick event.
