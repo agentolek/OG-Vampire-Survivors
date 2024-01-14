@@ -190,4 +190,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   maxHp: 6
-  xpOrb: {fileID: 8487248495848825124, guid: 81e4606e50af6884da57b683b7655e7d, type: 3}
+  xpOrb: {fileID: 885718078971772065, guid: 3ec6c204dd22c0344b76fe7b1adaa0f8, type: 3}
