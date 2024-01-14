@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class UpgradeManagement : MonoBehaviour
 {
@@ -27,6 +27,7 @@ public class UpgradeManagement : MonoBehaviour
     public void TriggerUpgrade()
     {
         SetUpButtons();
+        Time.timeScale = 0;
         upgradePopup.SetActive(true);
     }
 
@@ -44,7 +45,7 @@ public class UpgradeManagement : MonoBehaviour
             if (attack.GetComponent<AttackBase>().Level < attack.GetComponent<AttackBase>().maxLevel)
             {
                 currButton.onClick.AddListener(delegate { UpgradeAttack(attack); });
-                ChangeButtonText("level attack", button);
+                // ChangeButtonText("level attack", button);
             }
             else
             {
@@ -52,7 +53,7 @@ public class UpgradeManagement : MonoBehaviour
                 {
                     int value = random.Next(1, _playerController.PlayerLevel);
                     IncreaseMaxHp(value);
-                    ChangeButtonText($"maxHP += {value}", button);
+                    // ChangeButtonText($"maxHP += {value}", button);
                 });
             }
         }
@@ -60,7 +61,7 @@ public class UpgradeManagement : MonoBehaviour
     
     private void ChangeButtonText(string newText, GameObject button)
     {
-        button.GetComponentInChildren<Text>().text = newText;
+        button.GetComponentInChildren<TextMeshPro>().text = newText;
     }
     
     // helper functions, used to pass parameters to methods called by OnClick event.
@@ -77,6 +78,7 @@ public class UpgradeManagement : MonoBehaviour
     public void HideUpgradeScreen()
     {
         upgradePopup.SetActive(false);
+        Time.timeScale = 1;
     }
     
 }

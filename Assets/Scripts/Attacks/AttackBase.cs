@@ -38,7 +38,7 @@ public class AttackBase : MonoBehaviour
         return false;
     }
 
-    private void Start()
+    private void Awake()
     {
         Level = unlockedAtStart ? 1 : 0;
     }

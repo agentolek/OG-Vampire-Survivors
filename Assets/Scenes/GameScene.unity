@@ -1359,7 +1359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027bfd05db2bd2b4fb9c19caddeebacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableAttacks: []
   choiceButtons:
   - {fileID: 975251821}
   - {fileID: 1796616789}
@@ -4309,6 +4308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 10
+  unlockedAtStart: 0
   baseCooldown: 3
   baseDamage: 2
   attackDuration: 0.1
@@ -5630,6 +5630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 10
+  unlockedAtStart: 1
   baseCooldown: 1
   baseDamage: 1
   attackDuration: 0.1

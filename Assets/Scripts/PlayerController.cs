@@ -61,26 +61,11 @@ public class PlayerController : MonoBehaviour
         
         // changes player stats
         PlayerLevel += 1;
-        ChangeMaxHp(2);
         xp -= maxXp;
-        maxXp = Mathf.RoundToInt(1.2f * maxXp);
+        maxXp = Mathf.RoundToInt(maxXp * 1.2f);
         
-        // selects random attack to level up or activate
-        // TODO: this will enter infinite loop if all attacks are at their max level.
-        GameObject attack = attacks[random.Next(attacks.Count)];
-        while (attack.GetComponent<AttackBase>().Level >= attack.GetComponent<AttackBase>().maxLevel)
-        {
-            attack = attacks[random.Next(attacks.Count)];
-        }
-
-        if (!attack.activeSelf)
-        {
-            attack.SetActive(true);
-        }
-        else
-        {
-            attack.GetComponent<AttackBase>().Level += 1;
-        }
+        _upgradeController.TriggerUpgrade();
+        SetupAttacks();
     }
 
 
