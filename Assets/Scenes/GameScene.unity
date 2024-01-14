@@ -2473,7 +2473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   maxHp: 10
-  xp: 0
+  xp: 9
   maxXp: 10
   attacks:
   - {fileID: 1944614834}

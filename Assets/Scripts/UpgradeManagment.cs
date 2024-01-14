@@ -61,7 +61,7 @@ public class UpgradeManagement : MonoBehaviour
     
     private void ChangeButtonText(string newText, GameObject button)
     {
-        button.GetComponentInChildren<TextMeshPro>().text = newText;
+        button.GetComponentInChildren<TextMeshPro>().SetText(newText);
     }
     
     // helper functions, used to pass parameters to methods called by OnClick event.
