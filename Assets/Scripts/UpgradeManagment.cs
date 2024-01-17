@@ -12,10 +12,6 @@ public class UpgradeManagement : MonoBehaviour
     
     private PlayerController _playerController;
     private List<GameObject> _playerAttacks;
-    
-    // public delegate void Choice1();
-    // public delegate void Choice2();
-    // public delegate void Choice3();
 
     private void Start()
     {
@@ -70,6 +66,7 @@ public class UpgradeManagement : MonoBehaviour
     private void UpgradeAttack(GameObject attack)
     {
         attack.GetComponent<AttackBase>().Level += 1;
+        _playerController.SetupAttacks();
     }
 
     private void IncreaseMaxHp(int value)

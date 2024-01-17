@@ -62,15 +62,15 @@ public class PlayerController : MonoBehaviour
         maxXp = Mathf.RoundToInt(maxXp * 1.2f);
 
         _upgradeController.TriggerUpgrade();
-        SetupAttacks();
     }
 
 
-    private void SetupAttacks()
+    public void SetupAttacks()
     {
         // if attack's level is 0, hide it, otherwise show it
         foreach (var attack in attacks)
         {
+            Debug.Log(attack.name + " " + attack.GetComponent<AttackBase>().Level);
             attack.SetActive(attack.GetComponent<AttackBase>().Level != 0);
         }
     }
