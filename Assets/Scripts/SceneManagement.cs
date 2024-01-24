@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -43,10 +42,10 @@ public class SceneManagement : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
+// #if UNITY_EDITOR
+//         EditorApplication.isPlaying = false;
+// #else
         Application.Quit();
-#endif
+// #endif
     }
 }
