@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     // --- private variables
     private float _lastUsedTime;
     private Transform _playerTransform;
-    private Timer _timer;
+    private GameManagement _gameManagement;
     private GameObject _currentEnemy;
 
 
@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         _playerTransform = GameObject.Find("Player1").GetComponent<Transform>();
-        _timer = GameObject.Find("TimerText").GetComponent<Timer>();
+        _gameManagement = GameObject.Find("GameManager").GetComponent<GameManagement>();
         _currentEnemy = basicEnemy;
         SpawnEnemies();
     }
@@ -42,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if (_timer.TotalTime >= advancedEnemyTime)
+        if (_gameManagement.TotalTime >= advancedEnemyTime)
         {
             _currentEnemy = advancedEnemy;
         }
