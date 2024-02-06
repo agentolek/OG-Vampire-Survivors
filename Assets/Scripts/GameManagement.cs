@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManagement : MonoBehaviour
 {
     [SerializeField] public int gameLength = 120;
-    public static bool GameWon;
+    public static bool GameFinished;
     
     public float TotalTime { get; private set; }
 
@@ -19,7 +19,7 @@ public class GameManagement : MonoBehaviour
         
         if (gameLength <= TotalTime)
         {
-            GameWon = true;
+            GameFinished = true;
             FinishGame();
         }
     }

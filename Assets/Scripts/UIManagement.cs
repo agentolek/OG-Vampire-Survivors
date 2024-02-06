@@ -73,7 +73,7 @@ public class UIManagement : MonoBehaviour
 
     private void _SetTitleText()
     {
-        titleText.text = GameManagement.GameWon ? "Victory Royale!" : "Catastrophic failure!";
+        titleText.text = GameManagement.GameFinished ? "Victory Royale!" : "Catastrophic failure!";
     }
 }
 

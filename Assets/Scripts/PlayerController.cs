@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         gameObject.SetActive(false);
-        GameManagement.GameWon = false;
+        GameManagement.GameFinished = false;
         _gameManager.FinishGame();
     }
 
