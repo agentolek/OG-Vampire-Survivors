@@ -67,6 +67,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void _DisableEnemySpawner()
     {
-        this.enabled = false;
+        enabled = false;
     }
 }

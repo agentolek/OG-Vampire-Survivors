@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManagement : MonoBehaviour
 {
     [SerializeField] public int gameLength = 120;
-    public static bool GameWon = false;
+    public static bool GameWon;
     
     public float TotalTime { get; private set; }
 
