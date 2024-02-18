@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class PlacementManager : MonoBehaviour
 {
-    private InventoryManager inventoryManager;
+    private InventoryManager _inventoryManager;
     [SerializeField] GameObject spritePreview;
-    private bool placementMode = false;
-    private Item placingItem;
+    private bool _placementMode;
+    private Item _placingItem;
     [SerializeField] float maxPickupDistance;
 
     private void Start()
     {
-        inventoryManager = GetComponent<InventoryManager>();
+        _inventoryManager = GetComponent<InventoryManager>();
     }
 
-    private Item findClosestItem()
+    private Item FindClosestItem()
     {
         Item closestItem = null;
         float closestDistance = maxPickupDistance;
@@ -36,66 +36,66 @@ public class PlacementManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Item closestItem = findClosestItem();
-            if (closestItem != null)
+            Item closestItem = FindClosestItem();
+            if (closestItem)
             {
-                inventoryManager.addItem(closestItem);
-                closestItem.disappearFromGameWorld();
+                _inventoryManager.addItem(closestItem);
+                closestItem.DisappearFromGameWorld();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            placingItem = inventoryManager.getItem();
-            if (placingItem != null)
+            _placingItem = _inventoryManager.getItem();
+            if (_placingItem)
             {
-                enterPlacementMode(placingItem);
+                EnterPlacementMode(_placingItem);
             }
         }
 
-        if (placementMode)
+        if (_placementMode)
         {
-            placingItem.transform.position = getMousePosition();
-            showItemPreview(placingItem);
+            _placingItem.transform.position = GetMousePosition();
+            ShowItemPreview(_placingItem);
             if (Input.GetMouseButtonDown(0))
             {
-                placingItem.appearInGameWorld(placingItem.transform);
-                inventoryManager.removeItem();
-                exitPlacementMode();
+                _placingItem.AppearInGameWorld(_placingItem.transform);
+                _inventoryManager.removeItem();
+                ExitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                changeItemOrientation(placingItem);
+                ChangeItemOrientation(_placingItem);
             }
         }
     }
 
-    public void enterPlacementMode(Item item)
+    public void EnterPlacementMode(Item item)
     {
         Debug.Log("Placement mode entered");
-        placingItem = item;
-        Sprite sprite = item.getSprite();
+        _placingItem = item;
+        Sprite sprite = item.GetSprite();
         spritePreview.GetComponent<SpriteRenderer>().sprite = sprite;
-        placementMode = true;
+        _placementMode = true;
     }
 
-    private void exitPlacementMode()
+    private void ExitPlacementMode()
     {
         Debug.Log("Placement mode exited");
         spritePreview.GetComponent<SpriteRenderer>().sprite = null;
-        placementMode = false;
-        placingItem = null;
+        _placementMode = false;
+        _placingItem = null;
     }
 
-    private void changeItemOrientation(Item item)
+    private void ChangeItemOrientation(Item item)
     {
-        Debug.Log("Item orientation changed by " + 360 / item.numberOfOrientations + " degrees");
-        item.transform.Rotate(0, 0, 360 / item.numberOfOrientations);
+        Debug.Log("Item orientation changed by " + 360 / item.NumberOfOrientations + " degrees");
+        item.transform.Rotate(0, 0, 360 / item.NumberOfOrientations);
     }
 
-    private void showItemPreview(Item item)
+    private void ShowItemPreview(Item item)
     {
-        if (canPlaceItem(item, item.transform))
+        if (CanPlaceItem(item, item.transform))
         {
             spritePreview.GetComponent<SpriteRenderer>().color = Color.green;
             spritePreview.transform.position = item.transform.position;
@@ -109,12 +109,12 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    private bool canPlaceItem(Item item, Transform itemTransform)
+    private bool CanPlaceItem(Item item, Transform itemTransform)
     {
         return true;
     }
 
-    private Vector3 getMousePosition()
+    private Vector3 GetMousePosition()
     {
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseInWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);

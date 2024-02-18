@@ -3467,7 +3467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spritePreview: {fileID: 1322211209}
-  maxPickupDistance: 2
+  maxPickupDistance: 4
 --- !u!1 &1044515170
 GameObject:
   m_ObjectHideFlags: 0

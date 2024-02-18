@@ -2,44 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
     public string itemName;
-    protected int _numberOfOrientations;
-    protected Collider2D itemCollider;
-    protected SpriteRenderer itemSpriteRenderer;
+    protected Collider2D ItemCollider;
+    protected SpriteRenderer ItemSpriteRenderer;
     public bool existsInGameWorld;
 
     private void Awake()
     {
-        itemSpriteRenderer = GetComponent<SpriteRenderer>();
+        ItemSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public int numberOfOrientations
-    {
-        get
-        {
-            return _numberOfOrientations;
-        }
-    }
+    public int NumberOfOrientations { get; protected set; }
 
-    abstract public void use();
+    public abstract void Use();
 
-    virtual public void disappearFromGameWorld()
+    public virtual void DisappearFromGameWorld()
     {
-        itemCollider.enabled = false;
-        itemSpriteRenderer.enabled = false;
+        ItemCollider.enabled = false;
+        ItemSpriteRenderer.enabled = false;
         existsInGameWorld = false;
     }
-    virtual public void appearInGameWorld(Transform appearTransform)
+    public virtual void AppearInGameWorld(Transform appearTransform)
     {
         transform.position = appearTransform.position;
-        itemCollider.enabled = true;
-        itemSpriteRenderer.enabled = true;
+        ItemCollider.enabled = true;
+        ItemSpriteRenderer.enabled = true;
         existsInGameWorld = true;
     }
-    public Sprite getSprite()
+    public Sprite GetSprite()
     {
-        return itemSpriteRenderer.sprite;
+        return ItemSpriteRenderer.sprite;
     }
 }

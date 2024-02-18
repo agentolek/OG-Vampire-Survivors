@@ -5,23 +5,23 @@ using UnityEngine;
 
 public class Cannon : Item
 {
-    private SpriteRenderer spriteRenderer;
-    private CapsuleCollider2D capsuleCollider;
+    private SpriteRenderer _spriteRenderer;
+    private CapsuleCollider2D _capsuleCollider;
 
     private void Start()
     {
-        itemCollider = GetComponent<CapsuleCollider2D>();
+        ItemCollider = GetComponent<CapsuleCollider2D>();
         existsInGameWorld = true;
     }
 
     public Cannon()
     {
-        _numberOfOrientations = 4;
+        NumberOfOrientations = 4;
         itemName = "Cannon";
     }
 
     // start cannon placement
-    public override void use()
+    public override void Use()
     {
         Debug.Log("Cannon used");
     }
