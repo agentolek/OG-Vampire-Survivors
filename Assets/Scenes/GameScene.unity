@@ -993,6 +993,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 5849364476137733281, guid: d50a8e326f17b34498f77d0529564bac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3463,6 +3467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spritePreview: {fileID: 1322211209}
+  maxPickupDistance: 2
 --- !u!1 &1044515170
 GameObject:
   m_ObjectHideFlags: 0
@@ -7390,6 +7395,10 @@ PrefabInstance:
     - target: {fileID: 5849364476137733281, guid: a2aad9d0163c2a54a84e042d99b1606c, type: 3}
       propertyPath: m_Name
       value: Cannon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5849364476137733281, guid: a2aad9d0163c2a54a84e042d99b1606c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6979982030102632290, guid: a2aad9d0163c2a54a84e042d99b1606c, type: 3}
       propertyPath: m_Color.b

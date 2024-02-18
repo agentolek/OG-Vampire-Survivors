@@ -8,15 +8,15 @@ public class Cannon : Item
     private SpriteRenderer spriteRenderer;
     private CapsuleCollider2D capsuleCollider;
 
-    private void Awake()
+    private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        itemCollider = GetComponent<CapsuleCollider2D>();
+        existsInGameWorld = true;
     }
 
     public Cannon()
     {
-        NumberOfOrientations = 4;
+        _numberOfOrientations = 4;
         itemName = "Cannon";
     }
 
@@ -24,20 +24,5 @@ public class Cannon : Item
     public override void use()
     {
         Debug.Log("Cannon used");
-    }
-
-    // used when picked up by player
-    public override void disappearFromGameWorld()
-    {
-        spriteRenderer.enabled = false;
-        capsuleCollider.enabled = false;
-    }
-
-    // used when placed by player
-    public override void appearInGameWorld(Transform transform)
-    {
-        spriteRenderer.enabled = true;
-        capsuleCollider.enabled = true;
-        this.transform.position = transform.position;
     }
 }

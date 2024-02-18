@@ -8,36 +8,21 @@ public class Wall : Item
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
 
-    private void Awake()
+    private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        itemCollider = GetComponent<BoxCollider2D>();
+        existsInGameWorld = true;
     }
 
     public Wall()
     {
         itemName = "Wall";
-        NumberOfOrientations = 4;
+        _numberOfOrientations = 4;
     }
 
     // start cannon placement
     public override void use()
     {
         Debug.Log("Wall used");
-    }
-
-    // used when picked up by player
-    public override void disappearFromGameWorld()
-    {
-        spriteRenderer.enabled = false;
-        boxCollider.enabled = false;
-    }
-
-    // used when placed by player
-    public override void appearInGameWorld(Transform transform)
-    {
-        spriteRenderer.enabled = true;
-        boxCollider.enabled = true;
-        this.transform.position = transform.position;
     }
 }

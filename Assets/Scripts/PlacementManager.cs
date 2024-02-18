@@ -8,6 +8,7 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] GameObject spritePreview;
     private bool placementMode = false;
     private Item placingItem;
+    [SerializeField] float maxPickupDistance;
 
     private void Start()
     {
@@ -17,11 +18,12 @@ public class PlacementManager : MonoBehaviour
     private Item findClosestItem()
     {
         Item closestItem = null;
-        float closestDistance = Mathf.Infinity;
-        foreach (Item item in FindObjectsOfType<Item>())
+        float closestDistance = maxPickupDistance;
+        foreach (Item item in FindObjectsByType<Item>(FindObjectsSortMode.None))
         {
             float distance = Vector3.Distance(item.transform.position, transform.position);
-            if (distance < closestDistance)
+            Debug.Log("Distance to " + item.itemName + ": " + distance);
+            if (item.existsInGameWorld && distance < closestDistance)
             {
                 closestDistance = distance;
                 closestItem = item;
@@ -44,16 +46,21 @@ public class PlacementManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            // enterPlacementMode(item to place);
+            placingItem = inventoryManager.getItem();
+            if (placingItem != null)
+            {
+                enterPlacementMode(placingItem);
+            }
         }
 
         if (placementMode)
         {
             placingItem.transform.position = getMousePosition();
-            showItemPreview(placingItem, placingItem.transform);
+            showItemPreview(placingItem);
             if (Input.GetMouseButtonDown(0))
             {
                 placingItem.appearInGameWorld(placingItem.transform);
+                inventoryManager.removeItem();
                 exitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))
@@ -82,17 +89,17 @@ public class PlacementManager : MonoBehaviour
 
     private void changeItemOrientation(Item item)
     {
-        Debug.Log("Item orientation changed by " + 360 / item.NumberOfOrientations + " degrees");
-        item.transform.Rotate(0, 0, 360 / item.NumberOfOrientations);
+        Debug.Log("Item orientation changed by " + 360 / item.numberOfOrientations + " degrees");
+        item.transform.Rotate(0, 0, 360 / item.numberOfOrientations);
     }
 
-    private void showItemPreview(Item item, Transform transform)
+    private void showItemPreview(Item item)
     {
-        if (canPlaceItem(item, transform))
+        if (canPlaceItem(item, item.transform))
         {
             spritePreview.GetComponent<SpriteRenderer>().color = Color.green;
-            spritePreview.transform.position = transform.position;
-            spritePreview.transform.rotation = transform.rotation;
+            spritePreview.transform.position = item.transform.position;
+            spritePreview.transform.rotation = item.transform.rotation;
         }
         else
         {
@@ -102,7 +109,7 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    private bool canPlaceItem(Item item, Transform transform)
+    private bool canPlaceItem(Item item, Transform itemTransform)
     {
         return true;
     }
@@ -110,7 +117,8 @@ public class PlacementManager : MonoBehaviour
     private Vector3 getMousePosition()
     {
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 10;
-        return Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector3 mouseInWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        mouseInWorldPosition.z = 0;
+        return mouseInWorldPosition;
     }
 }

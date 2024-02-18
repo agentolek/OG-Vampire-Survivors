@@ -6,14 +6,40 @@ abstract public class Item : MonoBehaviour
 {
     public string itemName;
     protected int _numberOfOrientations;
-    public int NumberOfOrientations { get; set; }
+    protected Collider2D itemCollider;
+    protected SpriteRenderer itemSpriteRenderer;
+    public bool existsInGameWorld;
+
+    private void Awake()
+    {
+        itemSpriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    public int numberOfOrientations
+    {
+        get
+        {
+            return _numberOfOrientations;
+        }
+    }
 
     abstract public void use();
 
-    abstract public void disappearFromGameWorld();
-    abstract public void appearInGameWorld(Transform transform);
+    virtual public void disappearFromGameWorld()
+    {
+        itemCollider.enabled = false;
+        itemSpriteRenderer.enabled = false;
+        existsInGameWorld = false;
+    }
+    virtual public void appearInGameWorld(Transform appearTransform)
+    {
+        transform.position = appearTransform.position;
+        itemCollider.enabled = true;
+        itemSpriteRenderer.enabled = true;
+        existsInGameWorld = true;
+    }
     public Sprite getSprite()
     {
-        return GetComponent<SpriteRenderer>().sprite;
+        return itemSpriteRenderer.sprite;
     }
 }
