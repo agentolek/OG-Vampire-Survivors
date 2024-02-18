@@ -7,6 +7,7 @@ using UnityEngine;
 public class Nexus : MonoBehaviour
 {
     [SerializeField] public int maxHp = 50;
+    [SerializeField] public int testHp = 0;
     public int hp;
 
     public List<Sprite> sprites;
@@ -19,6 +20,7 @@ public class Nexus : MonoBehaviour
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManagement>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManagement>();
         hp = maxHp;
+        ChangeHp(-maxHp+testHp);
     }
 
     private void ChangeHp(int value)

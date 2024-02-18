@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 50
-  testHp: 50
+  testHp: 0
   hp: 0
   sprites:
   - {fileID: 21300000, guid: 4b3052fe51d3c7a4a810569d9eb1d7b1, type: 3}
