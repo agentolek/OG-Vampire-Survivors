@@ -5,7 +5,8 @@ using UnityEngine;
 abstract public class Item : MonoBehaviour
 {
     public string itemName;
-    public int numberOfOrientations;
+    protected int _numberOfOrientations;
+    public int NumberOfOrientations { get; set; }
 
     abstract public void use();
 

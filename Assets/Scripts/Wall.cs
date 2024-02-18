@@ -3,41 +3,41 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Cannon : Item
+public class Wall : Item
 {
     private SpriteRenderer spriteRenderer;
-    private CapsuleCollider2D capsuleCollider;
+    private BoxCollider2D boxCollider;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    public Cannon()
+    public Wall()
     {
+        itemName = "Wall";
         NumberOfOrientations = 4;
-        itemName = "Cannon";
     }
 
     // start cannon placement
     public override void use()
     {
-        Debug.Log("Cannon used");
+        Debug.Log("Wall used");
     }
 
     // used when picked up by player
     public override void disappearFromGameWorld()
     {
         spriteRenderer.enabled = false;
-        capsuleCollider.enabled = false;
+        boxCollider.enabled = false;
     }
 
     // used when placed by player
     public override void appearInGameWorld(Transform transform)
     {
         spriteRenderer.enabled = true;
-        capsuleCollider.enabled = true;
+        boxCollider.enabled = true;
         this.transform.position = transform.position;
     }
 }

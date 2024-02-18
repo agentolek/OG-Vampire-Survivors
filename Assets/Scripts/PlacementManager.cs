@@ -83,8 +83,8 @@ public class PlacementManager : MonoBehaviour
 
     private void changeItemOrientation(Item item)
     {
-        Debug.Log("Item orientation changed by " + 360 / item.numberOfOrientations + " degrees");
-        item.transform.Rotate(0, 0, 360 / item.numberOfOrientations);
+        Debug.Log("Item orientation changed by " + 360 / item.NumberOfOrientations + " degrees");
+        item.transform.Rotate(0, 0, 360 / item.NumberOfOrientations);
     }
 
     private void showItemPreview(Item item, Transform transform)
