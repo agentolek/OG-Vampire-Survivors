@@ -44,7 +44,7 @@ public class PlacementManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            enterPlacementMode(inventoryManager.getHeldItem());
+            // enterPlacementMode(item to place);
         }
 
         if (placementMode)
@@ -54,7 +54,6 @@ public class PlacementManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 placingItem.appearInGameWorld(placingItem.transform);
-                inventoryManager.removeItem();
                 exitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))
