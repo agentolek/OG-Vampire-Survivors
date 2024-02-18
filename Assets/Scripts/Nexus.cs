@@ -24,11 +24,11 @@ public class Nexus : MonoBehaviour
     private void ChangeHp(int value)
     {
         hp += value;
-        _uiManager.UpdateHp(hp, maxHp);
+        UpdateSprite((float)hp/maxHp);
+        // _uiManager.UpdateHp(hp, maxHp);
         if (hp <= 0)
         {
             _gameManager.FinishGame();
-            UpdateSprite((float)hp/maxHp);
         }
     }
     
@@ -39,6 +39,13 @@ public class Nexus : MonoBehaviour
 
     private void UpdateSprite(float percentage)
     {
-        
+        var spriteNum = 0;
+        while (percentage > (double)(spriteNum+1)/sprites.Count)
+        {
+            spriteNum += 1;
+        }
+
+        SpriteRenderer spriteRen = gameObject.GetComponent<SpriteRenderer>();
+        spriteRen.sprite = sprites[spriteNum];
     }
 }
