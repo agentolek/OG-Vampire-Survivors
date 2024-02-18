@@ -75,3 +75,6 @@ crashlytics-build.properties
 *.vscode/extensions.json
 *.vscode/launch.json
 *.vscode/settings.json
+.idea/.idea.OG-Vampire-Survivors/.idea/inspectionProfiles/Project_Default.xml
+Packages/manifest.json
+Packages/packages-lock.json
