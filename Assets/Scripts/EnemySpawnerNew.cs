@@ -19,18 +19,40 @@ public class EnemySpawnerNew : MonoBehaviour
     void SpawnWave()
     {
         Wave currWave = waves.Count > _waveCounter ? waves[_waveCounter] : defaultWave;
-        foreach (var enemyAndAmount in currWave.waveContent)
+        foreach (var waveData in currWave.waveContent)
         {
-            for (var i = 0; i < enemyAndAmount.amountToSpawn; i++)
-            {
-                var pos = (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized) * Random.Range(currWave.spawnDistance - 5, currWave.spawnDistance + 5);
-                Instantiate(enemyAndAmount.enemyToSpawn, pos + transform.position, Quaternion.identity);
-            }
+            StartCoroutine(SpawnEnemies(waveData));
         }
 
         _waveCounter += 1;
     }
-    
+
+    private IEnumerator SpawnEnemies(WaveContentData waveData)
+    {
+        yield return new WaitForSeconds(waveData.delayBeforeStart);
+        if (waveData.gradualSpawn)
+        {
+            while (!GameManagement.IsDay)
+            {
+                for (var i = 0; i < waveData.amountToSpawn; i++)
+                {
+                    var pos = (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized) * Random.Range(waveData.spawnDistance - 5, waveData.spawnDistance + 5);
+                    Instantiate(waveData.enemyToSpawn, pos + transform.position, Quaternion.identity);
+                }
+
+                yield return new WaitForSeconds(waveData.intervalBetweenSpawns);
+            }
+        }
+        else
+        {
+            for (var i = 0; i < waveData.amountToSpawn; i++)
+            {
+                var pos = (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized) * Random.Range(waveData.spawnDistance - 5, waveData.spawnDistance + 5);
+                Instantiate(waveData.enemyToSpawn, pos + transform.position, Quaternion.identity);
+            }
+        }
+    }
+
     private void OnEnable()
     {
         GameManagement.onGameFinished += _DisableEnemySpawner;
