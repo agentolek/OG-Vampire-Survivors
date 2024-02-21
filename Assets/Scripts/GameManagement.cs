@@ -13,8 +13,7 @@ public class GameManagement : MonoBehaviour
     public float TotalTime { get; private set; }
     private float _dayNightCd;
 
-    public delegate void OnGameFinished();
-    public static event OnGameFinished onGameFinished;
+    public static Action onGameFinished;
 
     // public delegate void OnChangeToDay();
     public event Action OnChangeToDay;
