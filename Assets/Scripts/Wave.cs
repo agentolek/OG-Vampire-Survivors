@@ -5,6 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Wave", menuName = "ScriptableObjects/WaveScriptableObject", order = 1)]
 public class Wave : ScriptableObject
 {
-    public List<EnemyAndAmount> waveContent;
-    public int spawnDistance;
+    public List<WaveContentData> waveContent;
 }
