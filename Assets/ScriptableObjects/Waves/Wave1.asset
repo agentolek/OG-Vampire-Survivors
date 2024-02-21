@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveContent:
   - enemyToSpawn: {fileID: 6722779513500544884, guid: 543fc5aaae20d574faaaec23ea31313d, type: 3}
-    amountToSpawn: 10
+    amountToSpawn: 2
+    gradualSpawn: 1
+    delayBeforeStart: 0
+    intervalBetweenSpawns: 2
+    spawnDistance: 20
   - enemyToSpawn: {fileID: 6910237348698167039, guid: 7e450f46aafb17c4c908c78d2355e7ff, type: 3}
     amountToSpawn: 1
-  spawnDistance: 30
+    gradualSpawn: 0
+    delayBeforeStart: 4
+    intervalBetweenSpawns: 0
+    spawnDistance: 20
