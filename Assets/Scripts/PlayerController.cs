@@ -70,7 +70,6 @@ public class PlayerController : MonoBehaviour
         // if attack's level is 0, hide it, otherwise show it
         foreach (var attack in attacks)
         {
-            Debug.Log(attack.name + " " + attack.GetComponent<AttackBase>().Level);
             attack.SetActive(attack.GetComponent<AttackBase>().Level != 0);
         }
     }
