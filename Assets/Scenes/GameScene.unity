@@ -2808,7 +2808,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 846331126}
-  - component: {fileID: 846331127}
   - component: {fileID: 846331128}
   m_Layer: 0
   m_Name: EnemySpawner
@@ -2832,24 +2831,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &846331127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846331125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb124803fd678d4e9e4268410042f75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnNumber: 20
-  spawnCooldown: 10
-  spawnDistance: 30
-  advancedEnemyTime: 22
-  basicEnemy: {fileID: 6722779513500544884, guid: 543fc5aaae20d574faaaec23ea31313d, type: 3}
-  advancedEnemy: {fileID: 6910237348698167039, guid: 7e450f46aafb17c4c908c78d2355e7ff, type: 3}
 --- !u!114 &846331128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2863,8 +2844,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1980062855}
-  waves: []
-  defaultWave: {fileID: 11400000, guid: add13e97393b4cd45b729f1111a1d79d, type: 2}
+  waves:
+  - {fileID: 11400000, guid: add13e97393b4cd45b729f1111a1d79d, type: 2}
+  defaultWave: {fileID: 11400000, guid: 89ffa8726bfeccb409c3a6bda88676f9, type: 2}
 --- !u!1 &884297847
 GameObject:
   m_ObjectHideFlags: 0
