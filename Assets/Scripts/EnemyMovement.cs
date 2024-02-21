@@ -33,11 +33,6 @@ public class EnemyMovement : MonoBehaviour
         _rb2d.velocity = _moveForce;
     }
 
-    // public void ActivateKnockback()
-    // {
-    //     StartCoroutine(KnockBack(data[0], kbForce, kbTime));
-    // }
-
     public IEnumerator KnockBack(Vector2 pos, float kbForce, float kbTime)
     {
         _knockedBack = true;

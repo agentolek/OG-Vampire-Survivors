@@ -7,6 +7,7 @@ public abstract class Item : MonoBehaviour
     public string itemName;
     protected Collider2D ItemCollider;
     protected SpriteRenderer ItemSpriteRenderer;
+    [HideInInspector]
     public bool existsInGameWorld;
 
     private void Awake()
