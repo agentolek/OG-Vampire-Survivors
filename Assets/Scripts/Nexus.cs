@@ -3,35 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Nexus : MonoBehaviour
 {
     [SerializeField] public int maxHp = 50;
     [SerializeField] public int testHp = 0;
     public int hp;
+    public Image healthBar;
 
     public List<Sprite> sprites;
     
-    private UIManagement _uiManager;
     private GameManagement _gameManager;
+    private float _xHpSize;
 
     private void Start()
     {
-        _uiManager = GameObject.Find("UIManager").GetComponent<UIManagement>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManagement>();
+        _xHpSize = healthBar.rectTransform.sizeDelta.x;
         hp = maxHp;
-        ChangeHp(-maxHp+testHp);
+        ChangeHp(testHp - maxHp);
     }
 
     private void ChangeHp(int value)
     {
         hp += value;
         UpdateSprite((float)hp/maxHp);
-        // _uiManager.UpdateHp(hp, maxHp);
+        UpdateHealthBar();
         if (hp <= 0)
         {
             _gameManager.FinishGame();
         }
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthBar.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, (float)hp / maxHp * _xHpSize);
     }
     
     public void TakeDamage(int damage)
