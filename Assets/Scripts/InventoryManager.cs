@@ -4,25 +4,26 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    private Item heldItem;
+    private Item _heldItem;
 
     public Item getItem()
     {
-        if (heldItem != null)
+        if (_heldItem)
         {
-            return heldItem;
+            Debug.Log("Got here!!!");
+            return _heldItem;
         }
         return null;
     }
 
     public void addItem(Item item)
     {
-        heldItem = item;
+        _heldItem = item;
         Debug.Log("Item added to inventory: " + item.itemName);
     }
 
     public void removeItem()
     {
-        heldItem = null;
+        _heldItem = null;
     }
 }

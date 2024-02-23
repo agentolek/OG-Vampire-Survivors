@@ -19,17 +19,26 @@ public abstract class Item : MonoBehaviour
 
     public abstract void Use();
 
+    // to też nie wiem czy jest dobrze, bo nie znika dzieci Item jak jakieś mają!
     public virtual void DisappearFromGameWorld()
     {
         ItemCollider.enabled = false;
         ItemSpriteRenderer.enabled = false;
         existsInGameWorld = false;
+        foreach (Transform child in transform.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.SetActive(false);
+        }
     }
     public virtual void AppearInGameWorld(Transform appearTransform)
     {
         transform.position = appearTransform.position;
         ItemCollider.enabled = true;
         ItemSpriteRenderer.enabled = true;
+        foreach (Transform child in transform.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.SetActive(true);
+        }
         existsInGameWorld = true;
     }
     public Sprite GetSprite()

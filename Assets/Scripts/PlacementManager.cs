@@ -15,32 +15,34 @@ public class PlacementManager : MonoBehaviour
         _inventoryManager = GetComponent<InventoryManager>();
     }
 
-    private Item FindClosestItem()
+    private PickupOrb FindClosestOrb()
     {
-        Item closestItem = null;
+        PickupOrb closestOrb = null;
         float closestDistance = maxPickupDistance;
-        foreach (Item item in FindObjectsByType<Item>(FindObjectsSortMode.None))
+        // this has got to be wrong, will find and calculate distance to every single PickupOrb in the world, which seems expensive
+        // can probably be done better with a raycast around the player or smth
+        foreach (PickupOrb orb in FindObjectsByType<PickupOrb>(FindObjectsSortMode.None))
         {
-            float distance = Vector3.Distance(item.transform.position, transform.position);
-            Debug.Log("Distance to " + item.itemName + ": " + distance);
-            if (item.existsInGameWorld && distance < closestDistance)
+            float distance = Vector3.Distance(orb.transform.position, transform.position);
+            Debug.Log("Distance to " + orb.itemName + ": " + distance);
+            if (orb.existsInGameWorld && distance < closestDistance)
             {
                 closestDistance = distance;
-                closestItem = item;
+                closestOrb = orb;
             }
         }
-        return closestItem;
+        return closestOrb;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Item closestItem = FindClosestItem();
-            if (closestItem)
+            PickupOrb closestOrb = FindClosestOrb();
+            if (closestOrb)
             {
-                _inventoryManager.addItem(closestItem);
-                closestItem.DisappearFromGameWorld();
+                _inventoryManager.addItem(closestOrb.containedItem);
+                closestOrb.DisappearFromGameWorld();
             }
         }
 
@@ -74,8 +76,7 @@ public class PlacementManager : MonoBehaviour
     {
         Debug.Log("Placement mode entered");
         _placingItem = item;
-        Sprite sprite = item.GetSprite();
-        spritePreview.GetComponent<SpriteRenderer>().sprite = sprite;
+        spritePreview.GetComponent<SpriteRenderer>().sprite = item.GetSprite();
         _placementMode = true;
     }
 
@@ -90,7 +91,7 @@ public class PlacementManager : MonoBehaviour
     private void ChangeItemOrientation(Item item)
     {
         Debug.Log("Item orientation changed by " + 360 / item.NumberOfOrientations + " degrees");
-        item.transform.Rotate(0, 0, 360 / item.NumberOfOrientations);
+        item.transform.Rotate(0, 0, (float)360 / item.NumberOfOrientations);
     }
 
     private void ShowItemPreview(Item item)
@@ -108,7 +109,8 @@ public class PlacementManager : MonoBehaviour
             spritePreview.transform.rotation = transform.rotation;
         }
     }
-
+    
+    // TODO: make CanPlaceItem an actual function, instead of this placeholder
     private bool CanPlaceItem(Item item, Transform itemTransform)
     {
         return true;
