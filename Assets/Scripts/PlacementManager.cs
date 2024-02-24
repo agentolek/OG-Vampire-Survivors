@@ -39,14 +39,14 @@ public class PlacementManager : MonoBehaviour
             Item closestItem = FindClosestItem();
             if (closestItem)
             {
-                _inventoryManager.addItem(closestItem);
+                // _inventoryManager.addItem(closestItem);
                 closestItem.DisappearFromGameWorld();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            _placingItem = _inventoryManager.getItem();
+            // _placingItem = _inventoryManager.getItem();
             if (_placingItem)
             {
                 EnterPlacementMode(_placingItem);
@@ -60,7 +60,7 @@ public class PlacementManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _placingItem.AppearInGameWorld(_placingItem.transform);
-                _inventoryManager.removeItem();
+                // _inventoryManager.removeItem();
                 ExitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))

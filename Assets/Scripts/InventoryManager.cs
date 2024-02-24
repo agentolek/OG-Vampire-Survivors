@@ -1,28 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    private Item heldItem;
-
-    public Item getItem()
+    private List<Button> _slotButtons;
+    
+    private void Start()
     {
-        if (heldItem != null)
+        _slotButtons = new List<Button>();
+        foreach (Transform child in transform)
         {
-            return heldItem;
+            _slotButtons.Add(child.GetComponent<Button>());
         }
-        return null;
     }
-
-    public void addItem(Item item)
+    
+    private void SetSlotImage(Sprite image, int slot)
     {
-        heldItem = item;
-        Debug.Log("Item added to inventory: " + item.itemName);
-    }
-
-    public void removeItem()
-    {
-        heldItem = null;
+        _slotButtons[slot].image.sprite = image;
     }
 }
