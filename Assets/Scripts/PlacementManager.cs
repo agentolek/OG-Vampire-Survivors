@@ -28,7 +28,6 @@ public class PlacementManager : MonoBehaviour
         foreach (Collider2D col in collidersHit)
         {
             float distance = Vector3.Distance(col.transform.position, transform.position);
-            Debug.Log("Distance to " + col.name + ": " + distance);
             if (distance < closestDistance)
             {
                 closestDistance = distance;
@@ -78,7 +77,6 @@ public class PlacementManager : MonoBehaviour
 
     public void EnterPlacementMode(GameObject item)
     {
-        Debug.Log("Placement mode entered");
         _placingItem = item;
         _spritePreview.sprite = item.GetComponent<Item>().GetSprite();
         _placementMode = true;
@@ -86,7 +84,6 @@ public class PlacementManager : MonoBehaviour
     // TODO: there should be a way to exit placement mode without placing an item
     private void ExitPlacementMode()
     {
-        Debug.Log("Placement mode exited");
         _spritePreview.sprite = null;
         _placementMode = false;
         _placingItem = null;
@@ -95,7 +92,6 @@ public class PlacementManager : MonoBehaviour
     private void ChangeItemOrientation(GameObject item)
     {
         Item itemComponent = item.GetComponent<Item>();
-        Debug.Log("Item orientation changed by " + 360 / itemComponent.NumberOfOrientations + " degrees");
         item.transform.Rotate(0, 0, (float)360 / itemComponent.NumberOfOrientations);
     }
 
