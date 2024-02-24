@@ -23,6 +23,7 @@ public class PickupOrb : Item
     private void SetIconSprite()
     {
         innerIcon.sprite = containedItem.GetSprite();
+        // TODO: this doesn't work, fix it
         innerIcon.size = new Vector2(2, 2);
 
     }
