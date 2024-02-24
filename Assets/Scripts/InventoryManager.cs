@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+
     private List<Button> _slotButtons;
     
     private void Start()
