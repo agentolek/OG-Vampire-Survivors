@@ -24,7 +24,7 @@ public class PickupOrb : Item
     {
         innerIcon.sprite = containedItem.GetSprite();
         // TODO: this doesn't work, fix it
-        innerIcon.size = new Vector2(2, 2);
+        innerIcon.transform.localScale = Vector3.one * containedItem.iconScale;
 
     }
     

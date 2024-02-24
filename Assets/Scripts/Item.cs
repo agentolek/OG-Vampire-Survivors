@@ -10,6 +10,8 @@ public abstract class Item : MonoBehaviour
     [HideInInspector]
     public bool existsInGameWorld;
 
+    [SerializeField] public float iconScale = 1;
+
     // private void Awake()
     // {
     //     ItemSpriteRenderer = GetComponent<SpriteRenderer>();
