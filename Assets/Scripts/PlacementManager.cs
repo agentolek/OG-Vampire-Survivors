@@ -20,21 +20,21 @@ public class PlacementManager : MonoBehaviour
 
     private PickupOrb FindClosestOrb()
     {
-        PickupOrb closestOrb = null;
-        float closestDistance = maxPickupDistance;
-        // this has got to be wrong, will find and calculate distance to every single PickupOrb in the world, which seems expensive
-        // can probably be done better with a raycast around the player or smth
-        foreach (PickupOrb orb in FindObjectsByType<PickupOrb>(FindObjectsSortMode.None))
+        GameObject closestOrb = null;
+        float closestDistance = Mathf.Infinity;
+        LayerMask mask = LayerMask.GetMask("ItemOrb");
+        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position, maxPickupDistance, mask);
+        foreach (Collider2D col in collidersHit)
         {
-            float distance = Vector3.Distance(orb.transform.position, transform.position);
-            Debug.Log("Distance to " + orb.itemName + ": " + distance);
-            if (orb.existsInGameWorld && distance < closestDistance)
+            float distance = Vector3.Distance(col.transform.position, transform.position);
+            Debug.Log("Distance to " + col.name + ": " + distance);
+            if (distance < closestDistance)
             {
                 closestDistance = distance;
-                closestOrb = orb;
+                closestOrb = col.gameObject;
             }
         }
-        return closestOrb;
+        return closestOrb ? closestOrb.GetComponent<PickupOrb>() : null;
     }
 
     private void Update()
