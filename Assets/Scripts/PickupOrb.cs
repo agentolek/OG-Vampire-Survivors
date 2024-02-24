@@ -21,10 +21,9 @@ public class PickupOrb : Item
 
     private void SetIconSprite()
     {
+        //TODO: icons no longer show up and I have no idea why
         innerIcon.sprite = containedItem.GetSprite();
-        // TODO: this doesn't work, fix it
         innerIcon.transform.localScale = Vector3.one * containedItem.iconScale;
-
     }
     
     public override void Use()

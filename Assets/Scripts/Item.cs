@@ -49,8 +49,9 @@ public abstract class Item : MonoBehaviour
     public bool IsTouching()
     {
         ContactFilter2D filter = new ContactFilter2D().NoFilter();
-        Collider2D[] _ = { };
-        if (Physics2D.OverlapCollider(itemCollider, filter, _) > 0)
+        Collider2D[] cols = { };
+        itemCollider.OverlapCollider(filter, cols);
+        if (cols.Length > 0)
         {
             return true;
         }
