@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     public string itemName;
-    protected Collider2D ItemCollider;
+    [SerializeField] protected Collider2D itemCollider;
     [SerializeField] protected SpriteRenderer itemSpriteRenderer;
     [HideInInspector]
     public bool existsInGameWorld;
@@ -20,11 +20,10 @@ public abstract class Item : MonoBehaviour
     public int NumberOfOrientations { get; protected set; }
 
     public abstract void Use();
-
-    // to też nie wiem czy jest dobrze, bo nie znika dzieci Item jak jakieś mają!
+    
     public virtual void DisappearFromGameWorld()
     {
-        ItemCollider.enabled = false;
+        itemCollider.isTrigger = true;
         itemSpriteRenderer.enabled = false;
         existsInGameWorld = false;
         foreach (Transform child in transform.GetComponentsInChildren<Transform>())
@@ -32,10 +31,9 @@ public abstract class Item : MonoBehaviour
             child.gameObject.SetActive(false);
         }
     }
-    public virtual void AppearInGameWorld(Transform appearTransform)
+    public virtual void AppearInGameWorld()
     {
-        transform.position = appearTransform.position;
-        ItemCollider.enabled = true;
+        itemCollider.isTrigger = false;
         itemSpriteRenderer.enabled = true;
         foreach (Transform child in transform.GetComponentsInChildren<Transform>())
         {
@@ -46,5 +44,17 @@ public abstract class Item : MonoBehaviour
     public Sprite GetSprite()
     {
         return itemSpriteRenderer.sprite;
+    }
+    
+    public bool IsTouching()
+    {
+        ContactFilter2D filter = new ContactFilter2D().NoFilter();
+        Collider2D[] _ = { };
+        if (Physics2D.OverlapCollider(itemCollider, filter, _) > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

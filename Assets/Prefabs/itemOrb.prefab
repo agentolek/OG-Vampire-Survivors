@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: orb
+  itemCollider: {fileID: 9156713469815937111}
   itemSpriteRenderer: {fileID: 0}
   existsInGameWorld: 0
   iconScale: 1

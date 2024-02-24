@@ -11,6 +11,7 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] float maxPickupDistance;
 
     private SpriteRenderer _spritePreview;
+    private Collider2D _spriteCollider;
 
     private void Start()
     {
@@ -82,7 +83,7 @@ public class PlacementManager : MonoBehaviour
         _spritePreview.sprite = item.GetComponent<Item>().GetSprite();
         _placementMode = true;
     }
-
+    // TODO: there should be a way to exit placement mode without placing an item
     private void ExitPlacementMode()
     {
         Debug.Log("Placement mode exited");
@@ -116,7 +117,14 @@ public class PlacementManager : MonoBehaviour
     // TODO: make CanPlaceItem an actual function, instead of this placeholder
     private bool CanPlaceItem(GameObject item)
     {
-        return true;
+        item.GetComponent<Item>().DisappearFromGameWorld();
+        GameObject testSpawn = Instantiate(item, _placingItem.transform.position, spritePreviewObject.transform.rotation);
+        
+        bool temp = testSpawn.GetComponent<Item>().IsTouching();
+        Destroy(testSpawn);
+        item.GetComponent<Item>().AppearInGameWorld();
+
+        return !temp;
     }
 
     private Vector3 GetMousePosition()

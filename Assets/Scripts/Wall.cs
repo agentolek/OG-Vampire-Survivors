@@ -10,7 +10,6 @@ public class Wall : Item
 
     private void Start()
     {
-        ItemCollider = GetComponent<BoxCollider2D>();
         existsInGameWorld = true;
     }
 

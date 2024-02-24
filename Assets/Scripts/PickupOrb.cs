@@ -14,7 +14,6 @@ public class PickupOrb : Item
 
     private void Start()
     {
-        ItemCollider = GetComponent<CircleCollider2D>();
         existsInGameWorld = true;
         containedItem = containedObject.GetComponent<Item>();
         SetIconSprite();
