@@ -51,6 +51,7 @@ public class PlacementManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             _placingItem = _inventoryManager.GetItem();
+
             if (_placingItem)
             {
                 EnterPlacementMode(_placingItem);
@@ -66,6 +67,7 @@ public class PlacementManager : MonoBehaviour
             {
                 Instantiate(_placingItem, _placingItem.transform.position, spritePreviewObject.transform.rotation);
                 _inventoryManager.RemoveItem();
+
                 ExitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))
