@@ -10,7 +10,6 @@ public class Cannon : Item
 
     private void Start()
     {
-        ItemCollider = GetComponent<CapsuleCollider2D>();
         existsInGameWorld = true;
     }
 

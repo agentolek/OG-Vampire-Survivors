@@ -4,25 +4,22 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    private Item heldItem;
+    private GameObject _heldItem;
 
-    public Item getItem()
+    public GameObject GetItem()
     {
-        if (heldItem != null)
-        {
-            return heldItem;
-        }
-        return null;
+        return _heldItem ? _heldItem : null;
     }
 
-    public void addItem(Item item)
+    public void AddItem(PickupOrb orb)
     {
-        heldItem = item;
-        Debug.Log("Item added to inventory: " + item.itemName);
+        _heldItem = orb.containedObject;
+        Destroy(orb.gameObject);
+        Debug.Log("Item added to inventory: " + _heldItem.name);
     }
 
-    public void removeItem()
+    public void RemoveItem()
     {
-        heldItem = null;
+        _heldItem = null;
     }
 }

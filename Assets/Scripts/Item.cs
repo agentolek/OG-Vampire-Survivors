@@ -5,34 +5,59 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     public string itemName;
-    protected Collider2D ItemCollider;
-    protected SpriteRenderer ItemSpriteRenderer;
+    [SerializeField] protected Collider2D itemCollider;
+    [SerializeField] protected SpriteRenderer itemSpriteRenderer;
+    [HideInInspector]
     public bool existsInGameWorld;
 
-    private void Awake()
-    {
-        ItemSpriteRenderer = GetComponent<SpriteRenderer>();
-    }
+    [SerializeField] public float iconScale = 1;
+    [SerializeField] public Sprite icon;
 
     public int NumberOfOrientations { get; protected set; }
 
     public abstract void Use();
-
+    
     public virtual void DisappearFromGameWorld()
     {
-        ItemCollider.enabled = false;
-        ItemSpriteRenderer.enabled = false;
+        itemCollider.isTrigger = true;
+        itemSpriteRenderer.enabled = false;
         existsInGameWorld = false;
+        foreach (Transform child in transform.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.SetActive(false);
+        }
+        gameObject.SetActive(true);
     }
-    public virtual void AppearInGameWorld(Transform appearTransform)
+    public virtual void AppearInGameWorld()
     {
-        transform.position = appearTransform.position;
-        ItemCollider.enabled = true;
-        ItemSpriteRenderer.enabled = true;
+        itemCollider.isTrigger = false;
+        itemSpriteRenderer.enabled = true;
+        foreach (Transform child in transform.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.SetActive(true);
+        }
         existsInGameWorld = true;
     }
     public Sprite GetSprite()
     {
-        return ItemSpriteRenderer.sprite;
+        return itemSpriteRenderer.sprite;
+    }
+
+    public Sprite GetIcon()
+    {
+        return icon;
+    }
+    
+    public bool IsTouching()
+    {
+        ContactFilter2D filter = new ContactFilter2D().NoFilter();
+        List<Collider2D> cols = new List<Collider2D>();
+        Physics2D.OverlapCollider(itemCollider, filter, cols);
+        if (cols.Count > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

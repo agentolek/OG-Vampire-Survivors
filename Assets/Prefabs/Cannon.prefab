@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5849364476137733281}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.32, y: 0, z: 0}
+  m_LocalPosition: {x: -1.3563356, y: -0.46625948, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -133,3 +133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caddc0079f346e84da03f8d5a42b2f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Cannon
+  itemCollider: {fileID: 2874742066930788367}
+  itemSpriteRenderer: {fileID: 6979982030102632290}
+  existsInGameWorld: 1
+  iconScale: 0.8
+  icon: {fileID: 21300000, guid: 3df9eed4a2e38ea4da4b512318408322, type: 3}

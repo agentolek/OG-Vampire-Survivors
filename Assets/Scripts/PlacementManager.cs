@@ -5,113 +5,119 @@ using UnityEngine;
 public class PlacementManager : MonoBehaviour
 {
     private InventoryManager _inventoryManager;
-    [SerializeField] GameObject spritePreview;
+    [SerializeField] GameObject spritePreviewObject;
     private bool _placementMode;
-    private Item _placingItem;
+    private GameObject _placingItem;
+    private GameObject _clonedItem;
     [SerializeField] float maxPickupDistance;
+
+    private SpriteRenderer _spritePreview;
+    private Collider2D _spriteCollider;
 
     private void Start()
     {
         _inventoryManager = GetComponent<InventoryManager>();
+        _spritePreview = spritePreviewObject.GetComponent<SpriteRenderer>();
     }
 
-    private Item FindClosestItem()
+    private PickupOrb FindClosestOrb()
     {
-        Item closestItem = null;
-        float closestDistance = maxPickupDistance;
-        foreach (Item item in FindObjectsByType<Item>(FindObjectsSortMode.None))
+        GameObject closestOrb = null;
+        float closestDistance = Mathf.Infinity;
+        LayerMask mask = LayerMask.GetMask("ItemOrb");
+        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position, maxPickupDistance, mask);
+        foreach (Collider2D col in collidersHit)
         {
-            float distance = Vector3.Distance(item.transform.position, transform.position);
-            Debug.Log("Distance to " + item.itemName + ": " + distance);
-            if (item.existsInGameWorld && distance < closestDistance)
+            float distance = Vector3.Distance(col.transform.position, transform.position);
+            if (distance < closestDistance)
             {
                 closestDistance = distance;
-                closestItem = item;
+                closestOrb = col.gameObject;
             }
         }
-        return closestItem;
+        return closestOrb ? closestOrb.GetComponent<PickupOrb>() : null;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Item closestItem = FindClosestItem();
-            if (closestItem)
+            PickupOrb closestOrb = FindClosestOrb();
+            if (closestOrb)
             {
-                _inventoryManager.addItem(closestItem);
-                closestItem.DisappearFromGameWorld();
+                _inventoryManager.AddItem(closestOrb);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            _placingItem = _inventoryManager.getItem();
+            _placingItem = _inventoryManager.GetItem();
             if (_placingItem)
             {
-                EnterPlacementMode(_placingItem);
+                _clonedItem = Instantiate(_placingItem, transform.position, Quaternion.identity);
+                EnterPlacementMode();
             }
         }
 
         if (_placementMode)
         {
-            _placingItem.transform.position = GetMousePosition();
-            ShowItemPreview(_placingItem);
-            if (Input.GetMouseButtonDown(0))
+            _clonedItem.transform.position = GetMousePosition();
+            ShowItemPreview();
+            // this just places the item, doesn't call CanPlace method
+            if (Input.GetMouseButtonDown(0) && CanPlaceItem())
             {
-                _placingItem.AppearInGameWorld(_placingItem.transform);
-                _inventoryManager.removeItem();
+                Instantiate(_placingItem, _clonedItem.transform.position, _clonedItem.transform.rotation);
+                _inventoryManager.RemoveItem();
                 ExitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                ChangeItemOrientation(_placingItem);
+                ChangeItemOrientation(_clonedItem);
             }
         }
     }
 
-    public void EnterPlacementMode(Item item)
+    public void EnterPlacementMode()
     {
-        Debug.Log("Placement mode entered");
-        _placingItem = item;
-        Sprite sprite = item.GetSprite();
-        spritePreview.GetComponent<SpriteRenderer>().sprite = sprite;
+        _clonedItem.SetActive(true);
+        _clonedItem.GetComponent<Item>().DisappearFromGameWorld();
+        _spritePreview.sprite = _placingItem.GetComponent<Item>().GetSprite();
         _placementMode = true;
     }
-
+    
+    // TODO: there should be a way to exit placement mode without placing an item
     private void ExitPlacementMode()
     {
-        Debug.Log("Placement mode exited");
-        spritePreview.GetComponent<SpriteRenderer>().sprite = null;
+        Destroy(_clonedItem);
+        _spritePreview.sprite = null;
         _placementMode = false;
         _placingItem = null;
     }
 
-    private void ChangeItemOrientation(Item item)
+    private void ChangeItemOrientation(GameObject item)
     {
-        Debug.Log("Item orientation changed by " + 360 / item.NumberOfOrientations + " degrees");
-        item.transform.Rotate(0, 0, 360 / item.NumberOfOrientations);
+        Item itemComponent = item.GetComponent<Item>();
+        item.transform.Rotate(0, 0, (float)360 / itemComponent.NumberOfOrientations);
     }
 
-    private void ShowItemPreview(Item item)
+    private void ShowItemPreview()
     {
-        if (CanPlaceItem(item, item.transform))
+        spritePreviewObject.transform.SetPositionAndRotation(_clonedItem.transform.position, _clonedItem.transform.rotation);
+        if (CanPlaceItem())
         {
-            spritePreview.GetComponent<SpriteRenderer>().color = Color.green;
-            spritePreview.transform.position = item.transform.position;
-            spritePreview.transform.rotation = item.transform.rotation;
+            _spritePreview.color = Color.green;
         }
         else
         {
-            spritePreview.GetComponent<SpriteRenderer>().color = Color.red;
-            spritePreview.transform.position = transform.position;
-            spritePreview.transform.rotation = transform.rotation;
+            _spritePreview.color = Color.red;
         }
     }
-
-    private bool CanPlaceItem(Item item, Transform itemTransform)
+    
+    private bool CanPlaceItem()
     {
-        return true;
+        bool temp = _clonedItem.GetComponent<Item>().IsTouching();
+
+        return !temp;
     }
 
     private Vector3 GetMousePosition()
