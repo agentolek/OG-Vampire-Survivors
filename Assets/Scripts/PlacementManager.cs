@@ -8,6 +8,7 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] GameObject spritePreviewObject;
     private bool _placementMode;
     private GameObject _placingItem;
+    private GameObject _clonedItem;
     [SerializeField] float maxPickupDistance;
 
     private SpriteRenderer _spritePreview;
@@ -53,37 +54,41 @@ public class PlacementManager : MonoBehaviour
             _placingItem = _inventoryManager.GetItem();
             if (_placingItem)
             {
-                EnterPlacementMode(_placingItem);
+                _clonedItem = Instantiate(_placingItem, transform.position, Quaternion.identity);
+                EnterPlacementMode();
             }
         }
 
         if (_placementMode)
         {
-            _placingItem.transform.position = GetMousePosition();
-            ShowItemPreview(_placingItem);
+            _clonedItem.transform.position = GetMousePosition();
+            ShowItemPreview();
             // this just places the item, doesn't call CanPlace method
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && CanPlaceItem())
             {
-                Instantiate(_placingItem, _placingItem.transform.position, spritePreviewObject.transform.rotation);
+                Instantiate(_placingItem, _clonedItem.transform.position, _clonedItem.transform.rotation);
                 _inventoryManager.RemoveItem();
                 ExitPlacementMode();
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                ChangeItemOrientation(_placingItem);
+                ChangeItemOrientation(_clonedItem);
             }
         }
     }
 
-    public void EnterPlacementMode(GameObject item)
+    public void EnterPlacementMode()
     {
-        _placingItem = item;
-        _spritePreview.sprite = item.GetComponent<Item>().GetSprite();
+        _clonedItem.SetActive(true);
+        _clonedItem.GetComponent<Item>().DisappearFromGameWorld();
+        _spritePreview.sprite = _placingItem.GetComponent<Item>().GetSprite();
         _placementMode = true;
     }
+    
     // TODO: there should be a way to exit placement mode without placing an item
     private void ExitPlacementMode()
     {
+        Destroy(_clonedItem);
         _spritePreview.sprite = null;
         _placementMode = false;
         _placingItem = null;
@@ -95,30 +100,22 @@ public class PlacementManager : MonoBehaviour
         item.transform.Rotate(0, 0, (float)360 / itemComponent.NumberOfOrientations);
     }
 
-    private void ShowItemPreview(GameObject item)
+    private void ShowItemPreview()
     {
-        if (CanPlaceItem(item))
+        spritePreviewObject.transform.SetPositionAndRotation(_clonedItem.transform.position, _clonedItem.transform.rotation);
+        if (CanPlaceItem())
         {
             _spritePreview.color = Color.green;
-            spritePreviewObject.transform.SetPositionAndRotation(item.transform.position, item.transform.rotation);
         }
         else
         {
             _spritePreview.color = Color.red;
-            spritePreviewObject.transform.SetPositionAndRotation(item.transform.position, item.transform.rotation);
-
         }
     }
     
-    // TODO: make CanPlaceItem an actual function, instead of this placeholder
-    private bool CanPlaceItem(GameObject item)
+    private bool CanPlaceItem()
     {
-        item.GetComponent<Item>().DisappearFromGameWorld();
-        GameObject testSpawn = Instantiate(item, _placingItem.transform.position, spritePreviewObject.transform.rotation);
-        
-        bool temp = testSpawn.GetComponent<Item>().IsTouching();
-        Destroy(testSpawn);
-        item.GetComponent<Item>().AppearInGameWorld();
+        bool temp = _clonedItem.GetComponent<Item>().IsTouching();
 
         return !temp;
     }

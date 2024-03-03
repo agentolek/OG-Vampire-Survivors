@@ -8,18 +8,13 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject GetItem()
     {
-        if (_heldItem)
-        {
-            Debug.Log("Got to GetItem!!!");
-            return _heldItem;
-        }
-        return null;
+        return _heldItem ? _heldItem : null;
     }
 
     public void AddItem(PickupOrb orb)
     {
         _heldItem = orb.containedObject;
-        orb.gameObject.SetActive(false);
+        Destroy(orb.gameObject);
         Debug.Log("Item added to inventory: " + _heldItem.name);
     }
 

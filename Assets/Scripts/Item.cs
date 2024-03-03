@@ -11,11 +11,7 @@ public abstract class Item : MonoBehaviour
     public bool existsInGameWorld;
 
     [SerializeField] public float iconScale = 1;
-
-    // private void Awake()
-    // {
-    //     ItemSpriteRenderer = GetComponent<SpriteRenderer>();
-    // }
+    [SerializeField] public Sprite icon;
 
     public int NumberOfOrientations { get; protected set; }
 
@@ -30,6 +26,7 @@ public abstract class Item : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
+        gameObject.SetActive(true);
     }
     public virtual void AppearInGameWorld()
     {
@@ -45,13 +42,18 @@ public abstract class Item : MonoBehaviour
     {
         return itemSpriteRenderer.sprite;
     }
+
+    public Sprite GetIcon()
+    {
+        return icon;
+    }
     
     public bool IsTouching()
     {
         ContactFilter2D filter = new ContactFilter2D().NoFilter();
-        Collider2D[] cols = { };
-        itemCollider.OverlapCollider(filter, cols);
-        if (cols.Length > 0)
+        List<Collider2D> cols = new List<Collider2D>();
+        Physics2D.OverlapCollider(itemCollider, filter, cols);
+        if (cols.Count > 0)
         {
             return true;
         }
